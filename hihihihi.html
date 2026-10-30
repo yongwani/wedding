@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>조승현 & 임지민 결혼합니다</title>
+
+  <!-- Google Fonts & Tailwind CSS CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+KR:wght@300;400;500;600&family=Pretendard:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cream: '#FAF7F2',
+              card: '#FFFFFF',
+              rose: '#D4A373',
+              darkRose: '#B57948',
+              charcoal: '#333333',
+              subtext: '#666666',
+              lightGray: '#F3EFEA',
+              gold: '#C5A880'
+            }
+          },
+          fontFamily: {
+            serif: ['Noto Serif KR', 'serif'],
+            cormorant: ['Cormorant Garamond', 'serif'],
+            sans: ['Pretendard', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #ECE7DE;
+      color: #333333;
+      font-family: 'Noto Serif KR', serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .font-sans-kr {
+      font-family: 'Pretendard', -apple-system, sans-serif;
+    }
+
+    /* Custom Scrollbar hide */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Subtle animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    /* Accordion transition */
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .accordion-content.open {
+      max-height: 600px;
+    }
+  </style>
+</head>
+<body class="flex justify-center min-h-screen">
+
+  <!-- Mobile Container (Max 480px) -->
+  <div class="w-full max-w-[480px] bg-brand-cream min-h-screen shadow-2xl relative flex flex-col pb-16 overflow-x-hidden selection:bg-brand-rose selection:text-white">
+
+    <!-- 1. Hero / Cover Section -->
+    <header class="relative flex flex-col items-center pt-12 pb-10 px-6 text-center">
+      <div class="text-xs uppercase tracking-[0.3em] text-brand-rose font-cormorant font-semibold mb-3">
+        Wedding Invitation
+      </div>
+      
+      <h1 class="text-2xl tracking-widest font-normal text-brand-charcoal mb-2">
+        조승현 <span class="text-sm font-light text-brand-rose mx-1">·</span> 임지민
+      </h1>
+      
+      <p class="text-xs font-sans-kr tracking-wider text-brand-subtext mb-8">
+        2028. 01. 01. SATURDAY PM 01:00<br>
+        광명 아이벡스 (IVEX)
+      </p>
+
+      <!-- Main Photo Frame -->
+      <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border-4 border-white/80 mb-8 group">
+        <img 
+          src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80" 
+          alt="Main Wedding Couple" 
+          class="w-full h-full object-cover object-center transition duration-700 ease-out group-hover:scale-105"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+        <div class="absolute bottom-4 left-0 right-0 text-white font-cormorant tracking-widest text-lg italic text-center drop-shadow-md">
+          Save our special day
+        </div>
+      </div>
+
+      <!-- Live D-Day Counter Box -->
+      <div class="w-full bg-white/70 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-brand-rose/20 font-sans-kr">
+        <div class="text-xs text-brand-rose font-semibold tracking-wider uppercase mb-2">
+          예식일까지 남은 시간
+        </div>
+        <div class="grid grid-cols-4 gap-2 text-center" id="dday-counter">
+          <div class="bg-brand-lightGray/70 rounded-lg p-2">
+            <span class="block text-lg font-bold text-brand-charcoal" id="days">00</span>
+            <span class="text-[10px] text-brand-subtext">DAYS</span>
+          </div>
+          <div class="bg-brand-lightGray/70 rounded-lg p-2">
+            <span class="block text-lg font-bold text-brand-charcoal" id="hours">00</span>
+            <span class="text-[10px] text-brand-subtext">HOURS</span>
+          </div>
+          <div class="bg-brand-lightGray/70 rounded-lg p-2">
+            <span class="block text-lg font-bold text-brand-charcoal" id="minutes">00</span>
+            <span class="text-[10px] text-brand-subtext">MINS</span>
+          </div>
+          <div class="bg-brand-lightGray/70 rounded-lg p-2">
+            <span class="block text-lg font-bold text-brand-charcoal" id="seconds">00</span>
+            <span class="text-[10px] text-brand-subtext">SECS</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Section Divider -->
+    <div class="flex justify-center items-center py-4">
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+      <i class="fa-solid fa-seedling text-brand-rose text-xs px-3"></i>
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+    </div>
+
+    <!-- 2. 모시는 글 (Invitation Greeting) -->
+    <section class="py-10 px-6 text-center">
+      <h2 class="text-xs uppercase tracking-[0.25em] text-brand-rose font-cormorant font-semibold mb-6">
+        INVITATION
+      </h2>
+      <h3 class="text-lg font-medium text-brand-charcoal mb-6">
+        소중한 분들을 초대합니다
+      </h3>
+      
+      <p class="text-sm leading-relaxed text-brand-subtext font-light mb-8 break-keep">
+        서로 다른 길을 걸어오던 두 사람이<br>
+        이제 같은 곳을 바라보며<br>
+        평생을 함께 걷고자 합니다.<br><br>
+        저희의 뜻깊은 시작의 첫걸음에<br>
+        따뜻한 마음으로 함께하시어<br>
+        축복해 주시면 더없는 기쁨이 되겠습니다.
+      </p>
+
+      <!-- Family Members List -->
+      <div class="bg-white/80 rounded-xl p-5 border border-brand-rose/15 shadow-sm inline-block w-full max-w-sm mb-6 text-sm">
+        <div class="flex justify-center items-center py-1">
+          <span class="font-medium text-brand-charcoal">조동식 · 이영란</span>
+          <span class="text-xs text-brand-subtext mx-2 font-sans-kr">의 장남</span>
+          <span class="font-semibold text-brand-charcoal">승현</span>
+        </div>
+        <div class="flex justify-center items-center py-1 border-t border-brand-lightGray/80 mt-2 pt-2">
+          <span class="font-medium text-brand-charcoal">임창호 · 박혜경</span>
+          <span class="text-xs text-brand-subtext mx-2 font-sans-kr">의 장녀</span>
+          <span class="font-semibold text-brand-charcoal">지민</span>
+        </div>
+      </div>
+
+      <!-- Contact Button -->
+      <div>
+        <button 
+          onclick="openContactModal()" 
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-brand-rose text-brand-rose hover:bg-brand-rose hover:text-white transition-colors duration-300 text-xs font-sans-kr shadow-sm"
+        >
+          <i class="fa-solid fa-phone text-xs"></i>
+          <span>신랑 · 신부에게 축하 연락하기</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="flex justify-center items-center py-2">
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+      <i class="fa-regular fa-heart text-brand-rose text-xs px-3"></i>
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+    </div>
+
+    <!-- 3. Photo Gallery -->
+    <section class="py-10 px-6">
+      <div class="text-center mb-6">
+        <span class="text-xs uppercase tracking-[0.25em] text-brand-rose font-cormorant font-semibold block mb-1">
+          GALLERY
+        </span>
+        <h2 class="text-lg font-medium text-brand-charcoal">웨딩 갤러리</h2>
+      </div>
+
+      <!-- Photo Grid -->
+      <div class="grid grid-cols-3 gap-2.5" id="gallery-grid">
+        <!-- Rendered dynamically or standard grid items -->
+      </div>
+      <p class="text-center text-[11px] text-brand-subtext mt-3 font-sans-kr">
+        * 사진을 터치하시면 크게 보실 수 있습니다.
+      </p>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="flex justify-center items-center py-2">
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+      <i class="fa-solid fa-calendar-days text-brand-rose text-xs px-3"></i>
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+    </div>
+
+    <!-- 4. Wedding Calendar & Schedule -->
+    <section class="py-10 px-6">
+      <div class="text-center mb-6">
+        <span class="text-xs uppercase tracking-[0.25em] text-brand-rose font-cormorant font-semibold block mb-1">
+          DATE & TIME
+        </span>
+        <h2 class="text-lg font-medium text-brand-charcoal">2028년 1월 1일 토요일</h2>
+        <p class="text-xs text-brand-subtext font-sans-kr mt-1">오후 1시</p>
+      </div>
+
+      <!-- Simple Calendar Widget -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-brand-rose/20 max-w-sm mx-auto font-sans-kr">
+        <div class="text-center font-cormorant text-xl font-bold text-brand-charcoal mb-4">
+          JANUARY 2028
+        </div>
+        <div class="grid grid-cols-7 gap-1 text-center text-xs text-brand-subtext font-medium mb-3">
+          <span class="text-red-400">일</span>
+          <span>월</span>
+          <span>화</span>
+          <span>수</span>
+          <span>목</span>
+          <span>금</span>
+          <span class="text-blue-500">토</span>
+        </div>
+        <div class="grid grid-cols-7 gap-1 text-center text-xs">
+          <!-- 2028 Jan starts on Saturday (Jan 1st) -->
+          <span class="p-2 text-stone-300">26</span>
+          <span class="p-2 text-stone-300">27</span>
+          <span class="p-2 text-stone-300">28</span>
+          <span class="p-2 text-stone-300">29</span>
+          <span class="p-2 text-stone-300">30</span>
+          <span class="p-2 text-stone-300">31</span>
+          <!-- D-Day: Jan 1st (Sat) -->
+          <span class="relative p-2 font-bold text-white flex items-center justify-center">
+            <span class="absolute inset-1 rounded-full bg-brand-rose shadow-md animate-pulse"></span>
+            <span class="relative z-10">1</span>
+          </span>
+
+          <span class="p-2 text-red-400">2</span>
+          <span class="p-2 text-brand-charcoal">3</span>
+          <span class="p-2 text-brand-charcoal">4</span>
+          <span class="p-2 text-brand-charcoal">5</span>
+          <span class="p-2 text-brand-charcoal">6</span>
+          <span class="p-2 text-brand-charcoal">7</span>
+          <span class="p-2 text-blue-500">8</span>
+
+          <span class="p-2 text-red-400">9</span>
+          <span class="p-2 text-brand-charcoal">10</span>
+          <span class="p-2 text-brand-charcoal">11</span>
+          <span class="p-2 text-brand-charcoal">12</span>
+          <span class="p-2 text-brand-charcoal">13</span>
+          <span class="p-2 text-brand-charcoal">14</span>
+          <span class="p-2 text-blue-500">15</span>
+
+          <span class="p-2 text-red-400">16</span>
+          <span class="p-2 text-brand-charcoal">17</span>
+          <span class="p-2 text-brand-charcoal">18</span>
+          <span class="p-2 text-brand-charcoal">19</span>
+          <span class="p-2 text-brand-charcoal">20</span>
+          <span class="p-2 text-brand-charcoal">21</span>
+          <span class="p-2 text-blue-500">22</span>
+
+          <span class="p-2 text-red-400">23</span>
+          <span class="p-2 text-brand-charcoal">24</span>
+          <span class="p-2 text-brand-charcoal">25</span>
+          <span class="p-2 text-brand-charcoal">26</span>
+          <span class="p-2 text-brand-charcoal">27</span>
+          <span class="p-2 text-brand-charcoal">28</span>
+          <span class="p-2 text-blue-500">29</span>
+
+          <span class="p-2 text-red-400">30</span>
+          <span class="p-2 text-brand-charcoal">31</span>
+          <span class="p-2 text-stone-300">1</span>
+          <span class="p-2 text-stone-300">2</span>
+          <span class="p-2 text-stone-300">3</span>
+          <span class="p-2 text-stone-300">4</span>
+          <span class="p-2 text-stone-300">5</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="flex justify-center items-center py-2">
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+      <i class="fa-solid fa-map-location-dot text-brand-rose text-xs px-3"></i>
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+    </div>
+
+    <!-- 5. 오시는 길 (Location & Directions) -->
+    <section class="py-10 px-6">
+      <div class="text-center mb-6">
+        <span class="text-xs uppercase tracking-[0.25em] text-brand-rose font-cormorant font-semibold block mb-1">
+          LOCATION
+        </span>
+        <h2 class="text-lg font-medium text-brand-charcoal">오시는 길</h2>
+        <p class="text-sm font-semibold text-brand-rose mt-1">광명 아이벡스 (IVEX)</p>
+        <p class="text-xs text-brand-subtext font-sans-kr mt-1">경기도 광명시 양지로 19 (일직동 512-3)</p>
+      </div>
+
+      <!-- Stylized Map Placeholder Frame -->
+      <div class="relative w-full h-52 bg-stone-200 rounded-2xl overflow-hidden border border-brand-rose/20 shadow-sm mb-4 flex items-center justify-center group">
+        <img 
+          src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=800&q=80" 
+          alt="Map Background" 
+          class="w-full h-full object-cover opacity-75 group-hover:scale-105 transition duration-500"
+        >
+        <div class="absolute inset-0 bg-stone-900/30 flex flex-col items-center justify-center text-white p-4 text-center">
+          <div class="w-10 h-10 rounded-full bg-brand-rose/90 flex items-center justify-center mb-2 shadow-lg">
+            <i class="fa-solid fa-location-dot text-white text-lg"></i>
+          </div>
+          <span class="font-medium text-sm drop-shadow">광명 아이벡스 (IVEX)</span>
+          <span class="text-[11px] text-white/90 font-sans-kr drop-shadow">KTX·1호선 광명역 도보 5분</span>
+        </div>
+      </div>
+
+      <!-- Navigation App Fast Buttons -->
+      <div class="grid grid-cols-3 gap-2 font-sans-kr text-xs mb-6">
+        <a 
+          href="https://map.naver.com/v5/search/%EA%B4%91%EB%AA%85%20%EC%95%84%EC%9D%B4%EB%B2%A1%EC%8A%A4" 
+          target="_blank" 
+          class="flex items-center justify-center gap-1.5 py-2.5 px-2 bg-[#03C75A] text-white font-medium rounded-xl shadow-sm hover:opacity-90 transition active:scale-95"
+        >
+          <span class="font-bold">N</span> 네이버 지도
+        </a>
+        <a 
+          href="https://map.kakao.com/?q=%EA%B4%91%EB%AA%85%20%EC%95%84%EC%9D%B4%EB%B2%A1%EC%8A%A4" 
+          target="_blank" 
+          class="flex items-center justify-center gap-1.5 py-2.5 px-2 bg-[#FEE500] text-stone-900 font-medium rounded-xl shadow-sm hover:opacity-90 transition active:scale-95"
+        >
+          <i class="fa-solid fa-comment text-xs"></i> 카카오맵
+        </a>
+        <a 
+          href="https://tmap.co.kr" 
+          target="_blank" 
+          class="flex items-center justify-center gap-1.5 py-2.5 px-2 bg-[#1B2F6E] text-white font-medium rounded-xl shadow-sm hover:opacity-90 transition active:scale-95"
+        >
+          <i class="fa-solid fa-diamond-turn-right text-xs"></i> 티맵
+        </a>
+      </div>
+
+      <!-- Transportation Details -->
+      <div class="bg-white rounded-2xl p-5 border border-brand-rose/20 shadow-sm font-sans-kr text-xs space-y-4">
+        <div class="flex items-start gap-3">
+          <div class="w-6 h-6 rounded-full bg-brand-lightGray flex-shrink-0 flex items-center justify-center text-brand-rose">
+            <i class="fa-solid fa-train-subway text-xs"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-brand-charcoal mb-0.5">지하철 및 KTX 이용 시</h4>
+            <p class="text-brand-subtext leading-relaxed">
+              <strong class="text-brand-charcoal">1호선 / KTX 광명역</strong> 1번·4번 출구 도보 5분 거리<br>
+              (AK플라자 광명점 및 U 플래닛 단지 연결)
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="w-6 h-6 rounded-full bg-brand-lightGray flex-shrink-0 flex items-center justify-center text-brand-rose">
+            <i class="fa-solid fa-bus text-xs"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-brand-charcoal mb-0.5">버스 이용 시</h4>
+            <p class="text-brand-subtext leading-relaxed">
+              KTX 광명역 1번·4번 출구 정류장 하차<br>
+              일반: 11-2, 17, 22, 50, 75 / 직행좌석: 8507, G9633
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="w-6 h-6 rounded-full bg-brand-lightGray flex-shrink-0 flex items-center justify-center text-brand-rose">
+            <i class="fa-solid fa-square-parking text-xs"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-brand-charcoal mb-0.5">자가용 및 주차 안내</h4>
+            <p class="text-brand-subtext leading-relaxed">
+              광명 아이벡스 / AK플라자 지하 주차장 이용<br>
+              (하객 2시간 무료 주차 지원)
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="flex justify-center items-center py-2">
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+      <i class="fa-solid fa-gift text-brand-rose text-xs px-3"></i>
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+    </div>
+
+    <!-- 6. 마음 전하실 곳 (축의금 / 계좌번호) -->
+    <section class="py-10 px-6">
+      <div class="text-center mb-6">
+        <span class="text-xs uppercase tracking-[0.25em] text-brand-rose font-cormorant font-semibold block mb-1">
+          ACCOUNT
+        </span>
+        <h2 class="text-lg font-medium text-brand-charcoal">마음 전하실 곳</h2>
+        <p class="text-xs text-brand-subtext font-sans-kr mt-1 leading-relaxed">
+          참석이 어려우신 분들을 위해<br>축하의 마음을 전달받을 계좌를 안내해 드립니다.
+        </p>
+      </div>
+
+      <div class="space-y-3 font-sans-kr">
+        <!-- Groom's Accordion -->
+        <div class="border border-brand-rose/25 rounded-2xl bg-white shadow-sm overflow-hidden">
+          <button 
+            onclick="toggleAccordion('groom-accounts')" 
+            class="w-full flex justify-between items-center px-5 py-4 text-left font-medium text-brand-charcoal hover:bg-brand-lightGray/40 transition"
+          >
+            <span class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+              <span>신랑측 계좌번호 확인하기</span>
+            </span>
+            <i id="groom-accounts-icon" class="fa-solid fa-chevron-down text-brand-subtext text-xs transition-transform duration-300"></i>
+          </button>
+          
+          <div id="groom-accounts" class="accordion-content bg-brand-lightGray/30">
+            <div class="p-4 space-y-3 border-t border-brand-rose/10 text-xs">
+              <!-- Item 1: 신랑 -->
+              <div class="p-3 bg-white rounded-xl shadow-xs border border-stone-100 flex justify-between items-center">
+                <div>
+                  <span class="font-bold text-brand-charcoal">신랑 조승현</span>
+                  <div class="text-brand-subtext text-[11px] mt-0.5">국민은행 937702-00-004500 (예금주 : 조승현)</div>
+                </div>
+                <div class="flex gap-1.5">
+                  <button 
+                    onclick="copyToClipboard('국민은행 937702-00-004500', '신랑 조승현')"
+                    class="px-2.5 py-1.5 rounded-lg bg-brand-lightGray text-brand-charcoal hover:bg-brand-rose hover:text-white transition font-medium"
+                  >
+                    복사
+                  </button>
+                </div>
+              </div>
+
+              <!-- Item 2: 혼주 아버지 -->
+              <div class="p-3 bg-white rounded-xl shadow-xs border border-stone-100 flex justify-between items-center">
+                <div>
+                  <span class="font-bold text-brand-charcoal">혼주 조동식 (부)</span>
+                  <div class="text-brand-subtext text-[11px] mt-0.5">국민은행 000-00-000000</div>
+                </div>
+                <button 
+                  onclick="copyToClipboard('국민은행 000-00-000000', '혼주 조동식')"
+                  class="px-2.5 py-1.5 rounded-lg bg-brand-lightGray text-brand-charcoal hover:bg-brand-rose hover:text-white transition font-medium"
+                >
+                  복사
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bride's Accordion -->
+        <div class="border border-brand-rose/25 rounded-2xl bg-white shadow-sm overflow-hidden">
+          <button 
+            onclick="toggleAccordion('bride-accounts')" 
+            class="w-full flex justify-between items-center px-5 py-4 text-left font-medium text-brand-charcoal hover:bg-brand-lightGray/40 transition"
+          >
+            <span class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-pink-400"></span>
+              <span>신부측 계좌번호 확인하기</span>
+            </span>
+            <i id="bride-accounts-icon" class="fa-solid fa-chevron-down text-brand-subtext text-xs transition-transform duration-300"></i>
+          </button>
+          
+          <div id="bride-accounts" class="accordion-content bg-brand-lightGray/30">
+            <div class="p-4 space-y-3 border-t border-brand-rose/10 text-xs">
+              <!-- Item 1: 신부 -->
+              <div class="p-3 bg-white rounded-xl shadow-xs border border-stone-100 flex justify-between items-center">
+                <div>
+                  <span class="font-bold text-brand-charcoal">신부 임지민</span>
+                  <div class="text-brand-subtext text-[11px] mt-0.5">우리은행 00000-00-000000 (예금주 : 임지민)</div>
+                </div>
+                <div class="flex gap-1.5">
+                  <button 
+                    onclick="copyToClipboard('우리은행 00000-00-000000', '신부 임지민')"
+                    class="px-2.5 py-1.5 rounded-lg bg-brand-lightGray text-brand-charcoal hover:bg-brand-rose hover:text-white transition font-medium"
+                  >
+                    복사
+                  </button>
+                </div>
+              </div>
+
+              <!-- Item 2: 혼주 어머니 -->
+              <div class="p-3 bg-white rounded-xl shadow-xs border border-stone-100 flex justify-between items-center">
+                <div>
+                  <span class="font-bold text-brand-charcoal">혼주 박혜경 (모)</span>
+                  <div class="text-brand-subtext text-[11px] mt-0.5">우리은행 000-000-000000</div>
+                </div>
+                <button 
+                  onclick="copyToClipboard('우리은행 000-000-000000', '혼주 박혜경')"
+                  class="px-2.5 py-1.5 rounded-lg bg-brand-lightGray text-brand-charcoal hover:bg-brand-rose hover:text-white transition font-medium"
+                >
+                  복사
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="flex justify-center items-center py-2">
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+      <i class="fa-regular fa-comment-dots text-brand-rose text-xs px-3"></i>
+      <div class="w-12 h-px bg-brand-rose/40"></div>
+    </div>
+
+    <!-- 7. 축하의 한마디 (Guestbook) -->
+    <section class="py-10 px-6 font-sans-kr">
+      <div class="text-center mb-6">
+        <span class="text-xs uppercase tracking-[0.25em] text-brand-rose font-cormorant font-semibold block mb-1">
+          GUESTBOOK
+        </span>
+        <h2 class="text-lg font-medium text-brand-charcoal">축하 메시지 남기기</h2>
+      </div>
+
+      <!-- Form Box -->
+      <form id="guestbook-form" onsubmit="handleGuestbookSubmit(event)" class="bg-white p-4 rounded-2xl border border-brand-rose/25 shadow-sm space-y-3 mb-6">
+        <div class="flex gap-2">
+          <input 
+            type="text" 
+            id="guest-name" 
+            placeholder="작성자 성함" 
+            required 
+            class="w-1/2 p-2.5 text-xs rounded-xl bg-brand-lightGray/50 border border-stone-200 focus:outline-none focus:border-brand-rose"
+          >
+          <input 
+            type="password" 
+            id="guest-pwd" 
+            placeholder="비밀번호(4자리)" 
+            maxlength="4" 
+            class="w-1/2 p-2.5 text-xs rounded-xl bg-brand-lightGray/50 border border-stone-200 focus:outline-none focus:border-brand-rose"
+          >
+        </div>
+        <textarea 
+          id="guest-msg" 
+          rows="3" 
+          placeholder="신랑, 신부에게 전할 축하의 한마디를 남겨주세요." 
+          required 
+          class="w-full p-2.5 text-xs rounded-xl bg-brand-lightGray/50 border border-stone-200 focus:outline-none focus:border-brand-rose resize-none"
+        ></textarea>
+        <button 
+          type="submit" 
+          class="w-full py-2.5 bg-brand-charcoal text-white rounded-xl text-xs font-semibold hover:bg-brand-rose transition active:scale-[0.99] shadow-sm"
+        >
+          축하 메시지 등록
+        </button>
+      </form>
+
+      <!-- Message List -->
+      <div id="guestbook-list" class="space-y-2.5 max-h-72 overflow-y-auto pr-1 no-scrollbar">
+        <!-- Default sample messages populated via JS -->
+      </div>
+    </section>
+
+    <!-- 8. Share & Footer -->
+    <footer class="pt-8 pb-12 px-6 bg-brand-lightGray/50 border-t border-brand-rose/20 text-center font-sans-kr">
+      <div class="flex justify-center gap-3 mb-6">
+        <!-- Kakao / Link Share -->
+        <button 
+          onclick="shareKakao()" 
+          class="flex items-center gap-1.5 px-4 py-2.5 bg-[#FEE500] text-stone-900 rounded-xl text-xs font-semibold shadow-xs hover:opacity-90 active:scale-95"
+        >
+          <i class="fa-solid fa-comment text-xs"></i> 카카오톡 공유
+        </button>
+        <button 
+          onclick="copyUrlToClipboard()" 
+          class="flex items-center gap-1.5 px-4 py-2.5 bg-white border border-stone-300 text-brand-charcoal rounded-xl text-xs font-semibold shadow-xs hover:bg-stone-50 active:scale-95"
+        >
+          <i class="fa-solid fa-link text-xs"></i> 링크 주소 복사
+        </button>
+      </div>
+
+      <div class="font-cormorant text-base text-brand-rose font-semibold tracking-widest mb-1">
+        SEUNG-HYUN & JI-MIN
+      </div>
+      <p class="text-[11px] text-brand-subtext font-light">
+        Copyright © 2028. All rights reserved.
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Contact Modal -->
+  <div id="contact-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl relative font-sans-kr animate-fade-in">
+      <button onclick="closeContactModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-600 text-lg p-2">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h3 class="text-center font-serif text-lg font-semibold text-brand-charcoal mb-1">축하 연락처</h3>
+      <p class="text-center text-xs text-brand-subtext mb-6">따뜻한 축하를 전해주세요.</p>
+
+      <!-- Groom Side -->
+      <div class="mb-5 pb-5 border-b border-stone-100">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-3">신랑측</span>
+        <div class="flex justify-between items-center mb-3">
+          <div class="text-xs">
+            <span class="text-brand-subtext">신랑</span>
+            <span class="font-semibold text-brand-charcoal ml-2">조승현</span>
+          </div>
+          <div class="flex gap-2">
+            <a href="tel:01012345678" class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs hover:bg-blue-600 hover:text-white transition">
+              <i class="fa-solid fa-phone"></i>
+            </a>
+            <a href="sms:01012345678" class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs hover:bg-blue-600 hover:text-white transition">
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="text-xs">
+            <span class="text-brand-subtext">아버지</span>
+            <span class="font-semibold text-brand-charcoal ml-2">조동식</span>
+          </div>
+          <div class="flex gap-2">
+            <a href="tel:01000000001" class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center text-xs hover:bg-stone-700 hover:text-white transition">
+              <i class="fa-solid fa-phone"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bride Side -->
+      <div>
+        <span class="text-xs font-bold text-pink-500 uppercase tracking-wider block mb-3">신부측</span>
+        <div class="flex justify-between items-center mb-3">
+          <div class="text-xs">
+            <span class="text-brand-subtext">신부</span>
+            <span class="font-semibold text-brand-charcoal ml-2">임지민</span>
+          </div>
+          <div class="flex gap-2">
+            <a href="tel:01087654321" class="w-8 h-8 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center text-xs hover:bg-pink-500 hover:text-white transition">
+              <i class="fa-solid fa-phone"></i>
+            </a>
+            <a href="sms:01087654321" class="w-8 h-8 rounded-full bg-pink-50 text-pink-500 flex items-center justify-center text-xs hover:bg-pink-500 hover:text-white transition">
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="text-xs">
+            <span class="text-brand-subtext">어머니</span>
+            <span class="font-semibold text-brand-charcoal ml-2">박혜경</span>
+          </div>
+          <div class="flex gap-2">
+            <a href="tel:01000000002" class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center text-xs hover:bg-stone-700 hover:text-white transition">
+              <i class="fa-solid fa-phone"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 hidden flex flex-col justify-between items-center p-4">
+    <div class="w-full flex justify-between items-center text-white py-2 px-3">
+      <span id="lightbox-counter" class="text-xs font-sans-kr tracking-widest text-stone-300">1 / 6</span>
+      <button onclick="closeLightbox()" class="text-white hover:text-stone-300 p-2 text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Image Display -->
+    <div class="relative w-full flex-1 flex items-center justify-center max-w-lg">
+      <img id="lightbox-image" src="" alt="Full view" class="max-h-[75vh] w-auto max-w-full rounded-lg object-contain shadow-2xl transition duration-300">
+      
+      <!-- Prev & Next arrows -->
+      <button onclick="navigateLightbox(-1)" class="absolute left-2 p-3 text-white/80 hover:text-white text-2xl">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button onclick="navigateLightbox(1)" class="absolute right-2 p-3 text-white/80 hover:text-white text-2xl">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <div class="py-4 text-center text-white/60 text-xs font-sans-kr">
+      좌우 화살표를 눌러 사진을 넘겨보세요
+    </div>
+  </div>
+
+  <!-- Toast Notification Feedback -->
+  <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-stone-900/90 text-white text-xs px-5 py-3 rounded-full shadow-xl transition-all duration-300 opacity-0 pointer-events-none font-sans-kr flex items-center gap-2">
+    <i class="fa-solid fa-circle-check text-brand-rose"></i>
+    <span id="toast-message">클립보드에 복사되었습니다.</span>
+  </div>
+
+  <!-- Application Logic -->
+  <script>
+    // Gallery Photos Data
+    const galleryPhotos = [
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=800&q=80"
+    ];
+
+    let currentPhotoIdx = 0;
+
+    // Render Gallery
+    function initGallery() {
+      const container = document.getElementById('gallery-grid');
+      container.innerHTML = '';
+      galleryPhotos.forEach((src, idx) => {
+        const item = document.createElement('div');
+        item.className = 'aspect-square rounded-xl overflow-hidden shadow-xs cursor-pointer group relative bg-stone-100';
+        item.onclick = () => openLightbox(idx);
+        item.innerHTML = `
+          <img 
+            src="${src}" 
+            alt="Wedding Photo ${idx + 1}" 
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            loading="lazy"
+          >
+          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors"></div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    // Lightbox Control
+    function openLightbox(index) {
+      currentPhotoIdx = index;
+      updateLightboxContent();
+      const modal = document.getElementById('lightbox-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightbox-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    function navigateLightbox(dir) {
+      currentPhotoIdx = (currentPhotoIdx + dir + galleryPhotos.length) % galleryPhotos.length;
+      updateLightboxContent();
+    }
+
+    function updateLightboxContent() {
+      const img = document.getElementById('lightbox-image');
+      const counter = document.getElementById('lightbox-counter');
+      img.src = galleryPhotos[currentPhotoIdx];
+      counter.innerText = `${currentPhotoIdx + 1} / ${galleryPhotos.length}`;
+    }
+
+    // Contact Modal
+    function openContactModal() {
+      const modal = document.getElementById('contact-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeContactModal() {
+      const modal = document.getElementById('contact-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Accordion Toggle
+    function toggleAccordion(id) {
+      const content = document.getElementById(id);
+      const icon = document.getElementById(`${id}-icon`);
+      const isOpen = content.classList.contains('open');
+
+      // Close all other accordions
+      document.querySelectorAll('.accordion-content').forEach(el => {
+        el.classList.remove('open');
+      });
+      document.querySelectorAll('[id$="-icon"]').forEach(i => {
+        i.style.transform = 'rotate(0deg)';
+      });
+
+      if (!isOpen) {
+        content.classList.add('open');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // Copy to Clipboard with Toast Feedback
+    function copyToClipboard(text, owner = '') {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        showToast(owner ? `${owner}님의 계좌가 복사되었습니다.` : "계좌번호가 복사되었습니다.");
+      } catch (err) {
+        showToast("복사에 실패했습니다. 수동으로 복사해주세요.");
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function copyUrlToClipboard() {
+      const textArea = document.createElement("textarea");
+      textArea.value = window.location.href;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast("청첩장 링크가 복사되었습니다.");
+      } catch (err) {
+        showToast("링크 복사에 실패했습니다.");
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function shareKakao() {
+      showToast("카카오톡 공유 메시지가 생성되었습니다.");
+    }
+
+    // Toast Notification
+    let toastTimeout;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const msgElem = document.getElementById('toast-message');
+      msgElem.innerText = msg;
+      
+      clearTimeout(toastTimeout);
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    // D-Day Live Countdown (Target: Jan 1, 2028, 13:00 KST)
+    function startCountdown() {
+      const weddingDate = new Date("2028-01-01T13:00:00+09:00").getTime();
+
+      function updateClock() {
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
+
+        if (distance < 0) {
+          document.getElementById('days').innerText = "00";
+          document.getElementById('hours').innerText = "00";
+          document.getElementById('minutes').innerText = "00";
+          document.getElementById('seconds').innerText = "00";
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerText = String(days).padStart(2, '0');
+        document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+        document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+      }
+
+      updateClock();
+      setInterval(updateClock, 1000);
+    }
+
+    // Guestbook Memory Storage
+    const sampleGuestbook = [
+      { name: "민준", text: "승현아 지민아 결혼 진심으로 축하해! 새해 첫날 행복한 시작을 응원해~!", date: "2027.12.20" },
+      { name: "서연", text: "너무 잘 어울리는 두 사람, 평생 지금처럼 예쁘게 사랑하길 바라 :)", date: "2027.12.24" },
+      { name: "도현", text: "두 분의 앞날에 언제나 사랑과 기쁨만 가득하길 축복합니다.", date: "2027.12.28" }
+    ];
+
+    function renderGuestbook() {
+      const container = document.getElementById('guestbook-list');
+      container.innerHTML = '';
+      sampleGuestbook.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'p-3 bg-white rounded-xl border border-stone-100 shadow-xs text-xs';
+        card.innerHTML = `
+          <div class="flex justify-between items-center mb-1">
+            <span class="font-bold text-brand-charcoal">${escapeHtml(item.name)}</span>
+            <span class="text-[10px] text-brand-subtext">${item.date}</span>
+          </div>
+          <p class="text-brand-subtext font-light leading-relaxed">${escapeHtml(item.text)}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function handleGuestbookSubmit(e) {
+      e.preventDefault();
+      const nameInput = document.getElementById('guest-name');
+      const msgInput = document.getElementById('guest-msg');
+
+      const name = nameInput.value.trim();
+      const text = msgInput.value.trim();
+
+      if (!name || !text) return;
+
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+
+      sampleGuestbook.unshift({ name, text, date: dateStr });
+      renderGuestbook();
+
+      nameInput.value = '';
+      msgInput.value = '';
+      const pwdInput = document.getElementById('guest-pwd');
+      if (pwdInput) pwdInput.value = '';
+
+      showToast("축하 메시지가 등록되었습니다. 감사합니다!");
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[tag] || tag)
+      );
+    }
+
+    // Initialize on page load
+    window.onload = function() {
+      initGallery();
+      startCountdown();
+      renderGuestbook();
+    };
+  </script>
+</body>
+</html>
